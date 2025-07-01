@@ -5,7 +5,7 @@ import { useAuth } from '@/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { LogIn, LogOut, User as UserIcon, AlertTriangle, LayoutDashboard } from 'lucide-react';
+import { ArrowLeft, LogOut, User as UserIcon, AlertTriangle } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -37,7 +37,7 @@ export function UserAuthButton() {
     return (
       <Button asChild>
         <Link href="/login">
-            <LogIn className="mr-2 h-4 w-4" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Login
         </Link>
       </Button>

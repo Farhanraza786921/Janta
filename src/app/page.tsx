@@ -247,8 +247,8 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-card text-center p-6 mt-12">
-        <p className="text-muted-foreground">
+      <footer className="text-center p-6">
+        <p className="text-muted-foreground text-sm">
           Powered by the Gutendex API and Google's Genkit.
         </p>
       </footer>
