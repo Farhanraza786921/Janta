@@ -20,14 +20,9 @@ export function Header() {
         </div>
         <nav className="flex items-center gap-2">
           <Button asChild variant="destructive" size="sm">
-            <a
-              href="https://coff.ee/Heart786"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold"
-            >
+            <Link href="/donate" className="font-semibold">
               Donate <Heart className="ml-1 h-4 w-4 fill-current" />
-            </a>
+            </Link>
           </Button>
         </nav>
       </div>
