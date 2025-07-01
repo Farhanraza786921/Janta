@@ -172,6 +172,21 @@ export default function Home() {
           </section>
         )}
 
+        {!isSearchLoading && searchResults.length === 0 && (
+          <div className="container mx-auto px-4 pb-12 pt-4">
+            <div className="relative mx-auto h-24 max-w-2xl md:h-32">
+              <Image
+                src="/padh.png"
+                alt="Decorative flourish"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 672px"
+                data-ai-hint="decorative pattern"
+              />
+            </div>
+          </div>
+        )}
+
         <section
           id="recommendations"
           className="bg-card py-16 md:py-24"
