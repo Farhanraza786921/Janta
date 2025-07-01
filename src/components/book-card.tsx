@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useConfetti } from '@/providers/confetti-provider';
 import { useAuth } from '@/providers/auth-provider';
 import { useToast } from '@/hooks/use-toast';
-import { db } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 
 type Book = {
   id: number;
@@ -42,11 +42,19 @@ export function BookCard({ book }: BookCardProps) {
   };
 
   const handleSave = async () => {
-    if (!user || !db) {
+    if (!user) {
       toast({
         variant: 'destructive',
         title: 'Please log in',
         description: 'You need to be logged in to save books.',
+      });
+      return;
+    }
+    if (!isFirebaseConfigured || !db) {
+      toast({
+        variant: 'destructive',
+        title: 'Feature Unavailable',
+        description: 'Firebase is not configured. Please add credentials to enable saving books.',
       });
       return;
     }
