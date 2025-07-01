@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/providers/auth-provider';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 import { Header } from '@/components/header';
 import { BookCard } from '@/components/book-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card';
-import { BookHeart, Frown, LogIn } from 'lucide-react';
+import { BookHeart } from 'lucide-react';
 
 type Book = {
   id: number;
@@ -21,15 +22,15 @@ type Book = {
 };
 
 export default function LibraryPage() {
-  const { user, loading: authLoading, signInWithGoogle } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [savedBooks, setSavedBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      setIsLoading(false);
-      setSavedBooks([]);
+      router.push('/login');
       return;
     }
 
@@ -50,10 +51,10 @@ export default function LibraryPage() {
     };
 
     fetchBooks();
-  }, [user, authLoading]);
+  }, [user, authLoading, router]);
 
   const renderContent = () => {
-    if (authLoading || isLoading) {
+    if (authLoading || (isLoading && user)) {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -73,19 +74,10 @@ export default function LibraryPage() {
         </div>
       );
     }
-
+    
     if (!user) {
-      return (
-        <div className="text-center py-16 flex flex-col items-center gap-4">
-          <Frown className="w-16 h-16 text-muted-foreground" />
-          <h3 className="text-2xl font-bold">Please log in</h3>
-          <p className="text-muted-foreground">You need to be logged in to view your library.</p>
-          <Button onClick={signInWithGoogle}>
-            <LogIn className="mr-2 h-4 w-4" />
-            Login with Google
-          </Button>
-        </div>
-      );
+        // This case is handled by the redirect, but as a fallback/preventing flicker
+        return null;
     }
 
     if (savedBooks.length === 0) {

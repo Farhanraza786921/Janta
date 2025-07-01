@@ -1,14 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import { useAuth } from '@/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { LogIn, LogOut, User as UserIcon, AlertTriangle } from 'lucide-react';
+import { LogIn, LogOut, User as UserIcon, AlertTriangle, LayoutDashboard } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function UserAuthButton() {
-  const { user, signInWithGoogle, signOut, loading, isFirebaseConfigured } = useAuth();
+  const { user, signOut, loading, isFirebaseConfigured } = useAuth();
 
   if (!isFirebaseConfigured) {
     return (
@@ -28,14 +30,16 @@ export function UserAuthButton() {
   }
 
   if (loading) {
-    return <Button variant="ghost" size="icon" disabled><UserIcon className="h-6 w-6 animate-pulse" /></Button>;
+    return <Skeleton className="h-10 w-24 rounded-md" />;
   }
 
   if (!user) {
     return (
-      <Button onClick={signInWithGoogle}>
-        <LogIn className="mr-2 h-4 w-4" />
-        Login
+      <Button asChild>
+        <Link href="/login">
+            <LogIn className="mr-2 h-4 w-4" />
+            Login
+        </Link>
       </Button>
     );
   }
@@ -58,6 +62,12 @@ export function UserAuthButton() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+            <Link href="/profile">
+                <UserIcon className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+            </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={signOut}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>

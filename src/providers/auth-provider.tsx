@@ -54,7 +54,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+       toast({
+          title: 'Welcome back!',
+          description: `You are now signed in as ${result.user.displayName}.`,
+      });
     } catch (error: any) {
       // Don't show an error toast if the user simply closed the popup.
       if (error.code !== 'auth/popup-closed-by-user') {
@@ -62,10 +66,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         toast({
           variant: 'destructive',
           title: 'Sign In Failed',
-          description: 'Could not sign in with Google. Please try again.',
+          description: error.message || 'Could not sign in with Google. Please try again.',
         });
       }
-      setLoading(false);
+    } finally {
+        setLoading(false);
     }
   };
 
@@ -73,6 +78,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!auth) return;
     try {
       await firebaseSignOut(auth);
+       toast({
+        title: 'Signed Out',
+        description: 'You have been successfully signed out.',
+      });
     } catch (error) {
        console.error("Error signing out: ", error);
        toast({
@@ -91,7 +100,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isFirebaseConfigured,
   };
   
-  if (loading) {
+  if (loading && typeof window !== 'undefined') {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="h-12 w-12 animate-spin" />
