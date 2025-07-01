@@ -55,13 +55,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Error signing in with Google: ", error);
-      toast({
-        variant: 'destructive',
-        title: 'Sign In Failed',
-        description: 'Could not sign in with Google. Please try again.',
-      });
+    } catch (error: any) {
+      // Don't show an error toast if the user simply closed the popup.
+      if (error.code !== 'auth/popup-closed-by-user') {
+        console.error("Error signing in with Google: ", error);
+        toast({
+          variant: 'destructive',
+          title: 'Sign In Failed',
+          description: 'Could not sign in with Google. Please try again.',
+        });
+      }
       setLoading(false);
     }
   };
