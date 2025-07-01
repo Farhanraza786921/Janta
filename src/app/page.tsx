@@ -174,14 +174,13 @@ export default function Home() {
 
         {!isSearchLoading && searchResults.length === 0 && (
           <div className="container mx-auto px-4 pb-12 pt-4">
-            <div className="relative mx-auto h-24 max-w-2xl md:h-32">
+            <div className="relative mx-auto h-32 max-w-2xl md:h-48">
               <Image
-                src="/padh.png"
-                alt="Decorative flourish"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 672px"
-                data-ai-hint="decorative pattern"
+                 src="/padh.png"
+                 alt="Padhai Kar Lo"
+                 fill
+                 className="rounded-xl object-contain"
+                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 640px"
               />
             </div>
           </div>
