@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { User, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
 import { auth, isFirebaseConfigured } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!auth) {
+    if (!isFirebaseConfigured) {
       setLoading(false);
       return;
     }
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    if (!auth) {
+    if (!isFirebaseConfigured) {
       toast({
           variant: 'destructive',
           title: 'Firebase Not Configured',
@@ -60,7 +60,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           description: `You are now signed in as ${result.user.displayName}.`,
       });
     } catch (error: any) {
-      // Don't show an error toast if the user simply closed the popup.
       if (error.code !== 'auth/popup-closed-by-user') {
         console.error("Error signing in with Google: ", error);
         toast({
@@ -70,12 +69,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
       }
     } finally {
-        setLoading(false);
+        // Setting loading to false is handled by onAuthStateChanged
     }
   };
 
   const signOut = async () => {
-    if (!auth) return;
+    if (!isFirebaseConfigured) return;
     try {
       await firebaseSignOut(auth);
        toast({
@@ -92,18 +91,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const value = {
+  const value = useMemo(() => ({
     user,
     loading,
     signInWithGoogle,
     signOut,
     isFirebaseConfigured,
-  };
+  }), [user, loading]);
   
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-12 w-12 animate-spin" />
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     )
   }
