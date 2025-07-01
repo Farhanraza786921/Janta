@@ -245,6 +245,40 @@ export default function Home() {
             )}
           </div>
         </section>
+
+        <section id="support" className="container mx-auto px-4 py-16 md:py-24">
+          <Card className="max-w-md mx-auto shadow-lg">
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl font-headline font-bold">Support Janta Library</CardTitle>
+              <CardDescription>
+                Your generosity helps keep this digital library alive and thriving for everyone. Every cup of coffee fuels our mission to make knowledge accessible to all.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-4">
+              <div className="relative w-48 h-48 bg-muted rounded-md">
+                <Image
+                  src="/bmc_qr.png"
+                  alt="Buy Me A Coffee QR Code"
+                  fill
+                  className="object-contain rounded-md p-2"
+                  sizes="192px"
+                  data-ai-hint="QR code"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground text-center">
+                Scan the QR or click the button to support me ❤️
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
+                <a href="https://coff.ee/Heart786" target="_blank" rel="noopener noreferrer">
+                  <span role="img" aria-label="coffee" className="mr-2">☕</span>
+                  Donate Now
+                </a>
+              </Button>
+            </CardFooter>
+          </Card>
+        </section>
       </main>
 
       <footer className="text-center p-6">
