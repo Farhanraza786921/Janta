@@ -4,7 +4,7 @@ import { useState } from 'react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Book, Bot, Loader2, Search, Sparkles, User } from 'lucide-react';
+import { Book, Bot, Loader2, Search, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,7 @@ import { BookCard } from '@/components/book-card';
 import { getRecommendationsAction } from './actions';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import { UserAuthButton } from '@/components/user-auth-button';
 
 type Book = {
   id: number;
@@ -117,9 +118,7 @@ export default function Home() {
               Janta Reader
             </h1>
           </div>
-          <Button variant="ghost" size="icon" aria-label="User Profile">
-            <User className="h-6 w-6" />
-          </Button>
+          <UserAuthButton />
         </div>
       </header>
 
