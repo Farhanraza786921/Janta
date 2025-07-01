@@ -257,7 +257,7 @@ export default function Home() {
             <CardContent className="flex flex-col items-center gap-4">
               <div className="relative w-48 h-48 bg-muted rounded-md">
                 <Image
-                  src="/bmc_qr.png"
+                  src="/mia.png"
                   alt="Buy Me A Coffee QR Code"
                   fill
                   className="object-contain rounded-md p-2"
@@ -266,7 +266,7 @@ export default function Home() {
                 />
               </div>
               <p className="text-sm text-muted-foreground text-center">
-                Scan the QR or click the button to support me ❤️
+                Click the button to support me ❤️
               </p>
             </CardContent>
             <CardFooter>
