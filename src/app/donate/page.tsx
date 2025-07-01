@@ -2,6 +2,7 @@ import { Header } from '@/components/header';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { Heart } from 'lucide-react';
 
 export default function DonatePage() {
   return (
@@ -16,14 +17,14 @@ export default function DonatePage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
-            <div className="relative w-full aspect-video bg-muted rounded-md overflow-hidden">
+            <div className="relative w-52 h-52 p-1 border rounded-lg bg-background shadow-inner">
               <Image
-                src="https://placehold.co/600x338.png"
+                src="https://placehold.co/400x400.png"
                 alt="A supporter of the Janta Library"
                 fill
-                className="object-cover"
-                sizes="(max-width: 440px) 100vw, 440px"
-                data-ai-hint="man doctor"
+                className="object-cover rounded-md"
+                sizes="208px"
+                data-ai-hint="woman portrait"
               />
             </div>
             <p className="text-sm text-muted-foreground text-center">
@@ -33,6 +34,7 @@ export default function DonatePage() {
           <CardFooter>
             <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
               <a href="https://coff.ee/Heart786" target="_blank" rel="noopener noreferrer">
+                <Heart className="mr-2 h-4 w-4 fill-current" />
                 Donate Now
               </a>
             </Button>

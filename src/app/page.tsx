@@ -176,11 +176,11 @@ export default function Home() {
           <div className="container mx-auto px-4 pb-12 pt-4">
             <div className="relative mx-auto h-32 max-w-2xl md:h-48">
               <Image
-                 src="/padh.png"
+                 src="/jony.png"
                  alt="Padhai Kar Lo"
                  fill
                  className="rounded-xl object-contain"
-                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 640px"
+                 sizes="(max-width: 770px) 100vw, (max-width: 1100px) 80vw, 640px"
               />
             </div>
           </div>
