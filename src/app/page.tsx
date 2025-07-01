@@ -249,7 +249,7 @@ export default function Home() {
 
       <footer className="text-center p-6">
         <p className="text-muted-foreground text-sm">
-          Powered by the Gutendex API and Google's Genkit.
+          Powered by FARHAN
         </p>
       </footer>
     </div>
