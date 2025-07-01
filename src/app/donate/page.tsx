@@ -19,7 +19,7 @@ export default function DonatePage() {
           <CardContent className="flex flex-col items-center gap-4">
             <div className="relative w-52 h-52 p-1 border rounded-lg bg-background shadow-inner">
               <Image
-                src="https://placehold.co/400x400.png"
+                src="mia.png"
                 alt="A supporter of the Janta Library"
                 fill
                 className="object-cover rounded-md"
