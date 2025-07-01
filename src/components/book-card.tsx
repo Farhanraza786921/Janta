@@ -1,11 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { BookOpen, Download } from 'lucide-react';
+import { BookOpen, Download, Bookmark, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useConfetti } from '@/providers/confetti-provider';
+import { useAuth } from '@/providers/auth-provider';
+import { useToast } from '@/hooks/use-toast';
+import { db } from '@/lib/firebase';
 
 type Book = {
   id: number;
@@ -20,6 +25,10 @@ interface BookCardProps {
 
 export function BookCard({ book }: BookCardProps) {
   const confetti = useConfetti();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [isSaving, setIsSaving] = useState(false);
+
   const author = book.authors[0]?.name || 'Unknown Author';
   const coverUrl = book.formats['image/jpeg'];
   const readUrl = book.formats['text/html'] || book.formats['text/html; charset=utf-8'];
@@ -29,6 +38,35 @@ export function BookCard({ book }: BookCardProps) {
     confetti.onOpen();
     if (downloadUrl) {
       window.open(downloadUrl, '_blank');
+    }
+  };
+
+  const handleSave = async () => {
+    if (!user || !db) {
+      toast({
+        variant: 'destructive',
+        title: 'Please log in',
+        description: 'You need to be logged in to save books.',
+      });
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const bookRef = doc(db, 'users', user.uid, 'savedBooks', String(book.id));
+      await setDoc(bookRef, { ...book });
+      toast({
+        title: 'Book Saved!',
+        description: `"${book.title}" has been added to your library.`,
+      });
+    } catch (error) {
+      console.error('Error saving book:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Save Failed',
+        description: 'Could not save the book. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -71,6 +109,12 @@ export function BookCard({ book }: BookCardProps) {
           <Button onClick={handleDownload} className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
             <Download />
             Download
+          </Button>
+        )}
+        {user && (
+          <Button onClick={handleSave} disabled={isSaving} variant="outline" className="w-full">
+            {isSaving ? <Loader2 className="animate-spin" /> : <Bookmark />}
+            Save
           </Button>
         )}
       </CardFooter>
