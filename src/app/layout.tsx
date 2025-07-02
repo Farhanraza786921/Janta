@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ConfettiProvider } from '@/providers/confetti-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 
 export const metadata: Metadata = {
   title: 'Janta Reader - Free Books for Everyone',
@@ -22,8 +23,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Literata:opsz@6..72&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn('font-body antialiased')}>
-        <ConfettiProvider>{children}</ConfettiProvider>
-        <Toaster />
+        <AuthProvider>
+          <ConfettiProvider>{children}</ConfettiProvider>
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
